@@ -113,7 +113,7 @@ The remaining extensions read the docblock documenting a hook where the hook is 
 
 Calls whose hook name contains no literal text, such as the `apply_filters_ref_array( $hook_name, $args )` re-dispatch in `plugin.php`, name no concrete hook and are skipped.
 
-One consequence worth knowing: because a hook's documentation may live in a different file than the call inheriting it, editing a hook docblock in a file that reference comments point at discards PHPStan's result cache. Every call site inheriting that docblock has to be analyzed again, and PHPStan cannot infer that dependency on its own.
+Because a hook's documentation may live in a different file than the call inheriting it, PHPStan cannot infer that dependency on its own. The tooling tells it: every call site resolving a reference comment tracks the referenced file, so any edit to that file, docblock or not, analyzes again the files referencing it. The rest of the result cache stays valid.
 
 ### Errors these rules report
 
